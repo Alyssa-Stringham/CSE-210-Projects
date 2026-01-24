@@ -1,51 +1,52 @@
 using System.IO;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 public class Journal
 {   
-    public List<Entry> _entry;
-    public void AddEntry(Entry _entry)
+    public List<Entry> _entries = new List<Entry>();
+    public void AddEntry(Entry newEntry)
     {
-        DateTime today = DateTime.Now;        
-        _entry._dateText = today.ToShortDateString();
-        _entry.DisplayEntries();        
-        Prompts _promptText = new Prompts();
-        _entry._promptText = _promptText.CreatePrompt();
-        _entry._entryText = Console.ReadLine();
+        Prompts prompt = new Prompts();
+        newEntry._promptText = prompt.CreatePrompt();
+        Console.WriteLine(">");
+        newEntry._entryText = Console.ReadLine();
+        DateTime today = DateTime.Now;
+        newEntry._dateText = today.ToShortDateString();
+        _entries.Add(newEntry);
     }
-    public void DisplayAll(List<Entry> _entry)
+    public void DisplayAll()
     {
-        foreach (Entry entry in _entry)
+        foreach (Entry entry in _entries)
         {
             entry.DisplayEntries();
         }
     }
-    public void SaveToFile(List<Entry> _entry)
+    public void SaveToFile(string file)
     {
-        Console.WriteLine("Enter the file name: ");
-        string filename = Console.ReadLine();
-        using (StreamWriter outputFile = new StreamWriter(filename))
+        using (StreamWriter outputFile = new StreamWriter(file))
         {
-            foreach (Entry e in _entry)
+            foreach (Entry e in _entries)
             {
                 outputFile.WriteLine($"{e._dateText} ~|~ {e._promptText} ~|~ {e._entryText}");
             }
         }   
     }
-    public List<Entry> LoadFromFile()
+    public void LoadFromFile(string file)
     {
-        List<Entry> _entry = new List<Entry>();        
-        Console.WriteLine("Enter the file name: ");
-        string filename = Console.ReadLine();
-        string[] lines = System.IO.File.ReadAllLines(filename);
+
+        string[] lines = System.IO.File.ReadAllLines(file);
+
         foreach (string line in lines)
         {
-            string [] parts = line.Split("~|~");
-            Entry newEntry = new Entry();
-            newEntry._dateText = parts[0];
-            newEntry._promptText = parts[1];
-            newEntry._entryText = parts[2];
+            string[] parts = line.Split("~|~");
+            string _date = parts[0];
+            string _prompt = parts[1];
+            string _text = parts[2];
 
-            _entry.Add(newEntry);
-        }
-        return _entry;      
+            Console.WriteLine($"Date: {_date}");
+            Console.WriteLine($"Prompt: {_prompt}");
+            Console.WriteLine($"{_text}");
+        }    
     }
 }
