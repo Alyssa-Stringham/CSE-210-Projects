@@ -6,21 +6,38 @@ class Program
     static void Main(string[] args)
     {
         Console.WriteLine("Hello World! This is the ScriptureMemorizer Project.");
-        Console.WriteLine("Scripture Reference and Text");
-        // start by displaying "text" and waits for user to press enter key
-        Console.WriteLine("Please enter to continue or type 'quit' to finish");
-        string action = Console.ReadLine();
+
+string action = "";
+        do
+        {
+            
+            Console.Clear();
+            
+            Reference r1 = new Reference("Proverbs", 3, 5, 6);
+            Scripture s1 = new Scripture(r1, "Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths. ");            
+            
+            //Scripture should display once, then prompt user for action
+
+            // if user doesn't quit, hide a few random words in the scripture, clear the console screen
+            // and display the scripture again 
+
+            // continue prompting user and hiding more words until the scripture is completely hidden 
+
+            // when all words are hidden, program should end
+
+            // core requirements - words can be selected completely randomly (even if already hidden)
+            // stretch - try to randomly select from only the words not already hidden 
+            Console.WriteLine(s1); 
+
+            Console.WriteLine("Please enter to continue or type 'quit' to finish");
+            action = Console.ReadLine(); 
+
+        } while (action != "quit");
+
         if (action == "quit")
         {
+            Console.Clear();
             Environment.Exit(0);
-        }
-        else
-        {
-        // clears the console
-        Console.Clear();
-        // show new text
-        Console.WriteLine("New text here"); 
-        // currently only does once, change so it repeats until quit           
         }
 
     }
