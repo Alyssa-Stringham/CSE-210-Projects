@@ -1,23 +1,23 @@
-public class BreathingActivity
+public class BreathingActivity : Activity
 {
-   // public BreathingActivity()
-    //{
+    public BreathingActivity(string name, string description): base(name, description)
+    {
         
-    //}
-
+    }
     public void Run()
     {
-        // display welcome message
-        // Get ready...
-        // display spinner
-        // breathe in... {count down}
-        // breathe out... {count down}
-        // repeate for duration
-        // example has extra line between breathe out and next breathe in
-        // end message (Well Done!)
-        // show spinner
-        // Completed x seconds message
-        // returns to menu
 
+        int duration = GetDuration();
+        DateTime startTime = DateTime.Now;
+        DateTime endTime = startTime.AddSeconds(duration);
+        while (DateTime.Now < endTime)
+        {
+            Console.Write("Breathe in...");
+            ShowCountDown(5);
+            Console.WriteLine();
+            Console.Write("Breate out...");
+            ShowCountDown(5);
+            Console.WriteLine();            
+        }
     }
 }
