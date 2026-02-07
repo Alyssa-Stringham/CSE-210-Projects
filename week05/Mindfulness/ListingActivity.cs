@@ -31,7 +31,7 @@ public class ListingActivity : Activity
         Console.WriteLine($"You listed {_count} items! ");
     }
 
-    public string GetRandomPrompt()
+    private string GetRandomPrompt()
     {
         _prompts = new List<string>();
         string prompt1 = "Who are some people you appreciate in your life? ";
@@ -54,7 +54,7 @@ public class ListingActivity : Activity
         return randomPrompt;
     }
 
-    public List<string> GetListFromUser()
+    private List<string> GetListFromUser()
     {
         List<string> _userList = new List<string>();
         return _userList;

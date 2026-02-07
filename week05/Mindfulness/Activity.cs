@@ -31,7 +31,7 @@ public class Activity
         ShowSpinner(5);
     }
 
-    public void ShowSpinner(int seconds)
+    protected void ShowSpinner(int seconds)
     {
         List<string> animationStrings = new List<string>();
         animationStrings.Add("|");
@@ -61,7 +61,7 @@ public class Activity
         }
     }
 
-    public void ShowCountDown(int seconds)
+    protected void ShowCountDown(int seconds)
     {
         for (int i = seconds; i>0; i--)
         {

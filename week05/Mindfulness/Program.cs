@@ -1,5 +1,6 @@
 using System;
-
+// Project enhancememt: For the reflecting activity, the program will select a random question 
+// that has not already been shown to the user
 class Program
 {
     static void Main(string[] args)

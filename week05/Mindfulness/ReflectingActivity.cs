@@ -2,6 +2,7 @@ public class ReflectingActivity : Activity
 {
     private List<string> _prompts;
     private List<string> _questions;
+    private List<string> _chooseFrom;
     
     public ReflectingActivity(string name, string description) : base(name, description)
     {
@@ -20,6 +21,8 @@ public class ReflectingActivity : Activity
             key = Console.ReadKey(intercept:true);
         } while (key.Key != ConsoleKey.Enter);
 
+        CreateQuestionList();
+
         Console.WriteLine("Now ponder each of the following questions as they relate to this question. ");
         Console.Write("You may begin in: ");
         ShowCountDown(5);
@@ -31,13 +34,11 @@ public class ReflectingActivity : Activity
         while (DateTime.Now < endTime)
         {
             DisplayQuestions();
-            ShowSpinner(5);           
+            ShowSpinner(10);           
         }
- 
-        // as future enhancement, can make sure to select different questions (not repeat the same question)
     }
 
-    public string GetRandomPrompt()
+    private string GetRandomPrompt()
     {
         _prompts = new List<string>();
         string prompt1 = "Think of a time when you stood up for someone else. ";
@@ -56,8 +57,8 @@ public class ReflectingActivity : Activity
 
         return randomPrompt;
     }
-
-    public string GetRandomQuestion()
+    
+    private void CreateQuestionList()
     {
         _questions = new List<string>();
         string question1 = "Why was this experience meaningful to you? ";
@@ -77,23 +78,41 @@ public class ReflectingActivity : Activity
         string question8 = "What did you learn about yourself through this experience? ";
         _questions.Add(question8);
         string question9 = "How can you keep this experience in mind in the future? ";
-        _questions.Add(question9);
+        _questions.Add(question9);   
+
+               
+        _chooseFrom = new List<string>();
+        foreach (string question in _questions)
+        {
+            _chooseFrom.Add(question);
+        }       
+    }
+    
+    private string GetRandomQuestion()
+    {
+
+        if (_chooseFrom == null || _chooseFrom.Count == 0)
+        {
+            Console.WriteLine("All Questions Answered");
+            return default;
+        }
         
-        string[] randomQuestionArray = Random.Shared.GetItems(_questions.ToArray(), 1);
-        string randomQuestion = randomQuestionArray[0];
+        int randomIndex = new Random().Next(0,_chooseFrom.Count);
+        string randomQuestion = _chooseFrom[randomIndex];
+        _chooseFrom.RemoveAt(randomIndex);
 
         return randomQuestion;
     }
 
-    public void DisplayPrompt()
+    private void DisplayPrompt()
     {
         string randomPrompt = GetRandomPrompt();
         Console.WriteLine(randomPrompt);        
     }
 
-    public void DisplayQuestions()
+    private void DisplayQuestions()
     {
-        string randomQuestion = GetRandomQuestion();
-        Console.WriteLine(randomQuestion);        
+        string randomQuestionDisplayed = GetRandomQuestion();
+        Console.WriteLine(randomQuestionDisplayed);             
     }
 }
