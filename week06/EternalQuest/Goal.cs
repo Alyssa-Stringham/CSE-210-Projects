@@ -1,13 +1,17 @@
 // name, description, and point value
+using System.Runtime.CompilerServices;
+
 public abstract class Goal
 {
-   private string _goalName;
-   private string _description;
-   private int _points;
+   protected string _goalName;
+   protected string _description;
+   protected int _points;
 
     public Goal(string name, string description, int points)
     {
-        
+        _goalName = name;
+        _description = description;
+        _points = points; 
     }
 
     public abstract void RecordEvent();
@@ -18,10 +22,18 @@ public abstract class Goal
 
     public virtual string GetDetailsString()
     {
-        // returns details of goal that can be shown in list
-        // include checkbox, name, description
-        // in checklist - overridden to show number of times goal done so far
-        return "string";
+        string checkbox = "[ ]";        
+        bool complete = IsComplete();
+        if (complete == true)
+        {
+            checkbox = "[X]";
+        }
+        return $"{checkbox} {_goalName} ({_description})";
+    }
+
+    public int GetPoints()
+    {
+        return _points;
     }
    
     public abstract string GetStringRepresentation();
